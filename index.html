@@ -106,9 +106,9 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">게임잡 · 게임운영 · 경력무관 · 2026-10-02 ~ 10-16 등록</div>
+    <div class="eyebrow">게임잡 · 게임운영 · 경력무관 · 최근 14일 등록 · <span id="updated"></span></div>
     <h1>게임운영 공고판</h1>
-    <p class="summary" id="summary">공고 14건</p>
+    <p class="summary" id="summary">공고를 불러오는 중입니다.</p>
   </header>
 
   <div class="controls">
@@ -122,7 +122,7 @@
   <ul class="list" id="list"></ul>
 
   <div class="notes">
-    <p>2026년 10월 16일에 게임잡에서 정리한 목록입니다. 마감일과 내용은 바뀔 수 있으니 지원 전에 공고 원문을 꼭 확인하세요.</p>
+    <p>매일 아침 9시에 게임잡에서 자동으로 다시 가져옵니다. 묶음(운영 중심 / 외국어 / 기획·PM)은 공고 제목의 단어로 자동 분류해서 가끔 틀릴 수 있습니다. 마감일과 내용은 바뀔 수 있으니 지원 전에 공고 원문을 꼭 확인하세요.</p>
     <p>파견직은 인력회사(그린맨파워, 휴머니아)에 소속되어 게임회사에서 일하는 형태입니다. 급여와 계약 조건이 정규직과 다를 수 있습니다.</p>
     <p>원본 목록: <a href="https://www.gamejob.co.kr/Recruit/joblist?menucode=duty" target="_blank" rel="noopener">게임잡 직종별 채용정보</a></p>
   </div>
@@ -130,29 +130,34 @@
 
 <script>
   const KINDS = { ops: "운영 중심", lang: "운영 + 외국어", plan: "기획·PM 위주" };
+  // 아래 JOBS:START ~ JOBS:END 사이는 scripts/update.py가 매일 새로 채웁니다.
+  /* JOBS:START */
+  const UPDATED = "2026-10-16 17:51";
   const JOBS = [
-    { id: 285857, kind: "ops", co: "휴먼웍스", title: "게임 운영 및 기획자 채용", type: "정규직, 계약직", loc: "서울 강남구", edu: "고졸 이상", reg: "10-13", end: "10-18" },
-    { id: 285812, kind: "ops", co: "휴머니아", title: "[마포상암/인센티브] 글로벌게임사 게임운영(GM) 채용", type: "파견직", loc: "서울 마포구", edu: "고졸 이상", reg: "10-12", end: "10-19" },
-    { id: 285856, kind: "ops", co: "게임엔", title: "게임 운영 및 기획자 채용", type: "정규직, 계약직, 병역특례", loc: "서울 강남구", edu: "고졸 이상", reg: "10-13", end: "10-22" },
-    { id: 285720, kind: "ops", co: "스타픽시스튜디오", title: "[메이플스타/MSW] 게임 서비스 운영 직군", type: "정규직", loc: "경기 용인시", edu: "학력무관", reg: "10-09", end: "11-08" },
-    { id: 285840, kind: "ops", co: "㈜그린맨파워", title: "[마포구/상암] 유명 장수형 MMORPG 게임운영(GM) 채용", type: "파견직", loc: "서울 마포구", edu: "학력무관", reg: "10-13", end: "11-13" },
-    { id: 285537, kind: "ops", co: "㈜그린맨파워", title: "[판교] 국내 대형게임사 모니터링 담당 채용", type: "파견직", loc: "경기 성남시", edu: "학력무관", reg: "10-02", end: null },
-    { id: 285689, kind: "lang", co: "㈜네오위즈", title: "[네오위즈] 영어 Linguist (계약직)", type: "계약직", loc: "경기 성남시", edu: "학력무관", reg: "10-08", end: null },
-    { id: 285691, kind: "lang", co: "㈜네오위즈", title: "[네오위즈] 중국어(간체) Linguist (계약직)", type: "계약직", loc: "경기 성남시", edu: "학력무관", reg: "10-08", end: null },
-    { id: 285694, kind: "lang", co: "㈜네오위즈", title: "[네오위즈] 중국어(번체) Linguist (계약직)", type: "계약직", loc: "경기 성남시", edu: "학력무관", reg: "10-08", end: null },
-    { id: 285600, kind: "lang", co: "게임덱스", title: "[영어] 게임 현지화 파트 번역/검수 담당 (계약직)", type: "계약직", loc: "경기 성남시", edu: "학력무관", reg: "10-07", end: null },
-    { id: 285909, kind: "plan", co: "㈜토스트", title: "겜성있는 인디게임 기획자를 찾습니다", type: "정규직, 계약직, 아르바이트", loc: "대구 동구", edu: "학력무관", reg: "10-15", end: "10-31" },
-    { id: 285877, kind: "plan", co: "티쓰리엔터테인먼트", title: "[오디션팀] 글로벌 개발 PM 채용", type: "정규직", loc: "서울 금천구", edu: "학력무관", reg: "10-14", end: null },
-    { id: 285730, kind: "plan", co: "인플루전", title: "개발 PM 채용", type: "정규직", loc: "경기 성남시", edu: "학력무관", reg: "10-09", end: null },
-    { id: 285677, kind: "plan", co: "㈜디벨로켓", title: "[넥스코어] 게임 기획자(시스템, 컨텐츠) 모집", type: "계약직", loc: "경기, 서울", edu: "학력무관", reg: "10-08", end: "12-08" }
+    {"id": 285989, "kind": "ops", "co": "휴머니아", "title": "[마포상암/성과급지급] 글로벌게임사 게임QA테스터 채용", "type": "파견직", "loc": "서울 마포구", "edu": "고졸 이상", "reg": "2026-10-16", "end": "2026-10-21", "careerNote": false},
+    {"id": 285909, "kind": "plan", "co": "㈜토스트", "title": "겜성있는 인디게임 기획자를 찾습니다", "type": "정규직, 계약직, 아르바이트", "loc": "대구 동구", "edu": "학력무관", "reg": "2026-10-15", "end": "2026-10-31", "careerNote": false},
+    {"id": 285877, "kind": "plan", "co": "티쓰리엔터테인먼트", "title": "[오디션팀] 글로벌 개발 PM 채용", "type": "정규직", "loc": "서울 금천구", "edu": "학력무관", "reg": "2026-10-14", "end": null, "careerNote": false},
+    {"id": 285857, "kind": "ops", "co": "휴먼웍스", "title": "게임 운영 및 기획자 채용", "type": "정규직, 계약직", "loc": "서울 강남구", "edu": "고졸 이상", "reg": "2026-10-13", "end": "2026-10-18", "careerNote": false},
+    {"id": 285856, "kind": "ops", "co": "게임엔", "title": "게임 운영 및 기획자 채용", "type": "정규직, 계약직, 병역특례", "loc": "서울 강남구", "edu": "고졸 이상", "reg": "2026-10-13", "end": "2026-10-22", "careerNote": false},
+    {"id": 285840, "kind": "ops", "co": "㈜그린맨파워", "title": "[마포구/상암] 유명 장수형 MMORPG 게임운영(GM)채용", "type": "파견직", "loc": "서울 마포구", "edu": "학력무관", "reg": "2026-10-13", "end": "2026-11-13", "careerNote": false},
+    {"id": 285812, "kind": "ops", "co": "휴머니아", "title": "[마포상암/인센티브] 글로벌게임사 게임운영(GM) 채용", "type": "파견직", "loc": "서울 마포구", "edu": "고졸 이상", "reg": "2026-10-12", "end": "2026-10-19", "careerNote": false},
+    {"id": 285730, "kind": "plan", "co": "인플루전", "title": "개발 PM 채용", "type": "정규직", "loc": "경기 성남시", "edu": "학력무관", "reg": "2026-10-09", "end": null, "careerNote": false},
+    {"id": 285720, "kind": "ops", "co": "스타픽시스튜디오", "title": "[메이플스타/MSW] 게임 서비스 운영 직군", "type": "정규직", "loc": "경기 용인시", "edu": "학력무관", "reg": "2026-10-09", "end": "2026-11-08", "careerNote": false},
+    {"id": 285694, "kind": "lang", "co": "㈜네오위즈", "title": "[네오위즈] 중국어(번체) Linguist (계약직)", "type": "계약직", "loc": "경기 성남시", "edu": "학력무관", "reg": "2026-10-08", "end": null, "careerNote": false},
+    {"id": 285691, "kind": "lang", "co": "㈜네오위즈", "title": "[네오위즈] 중국어(간체) Linguist (계약직)", "type": "계약직", "loc": "경기 성남시", "edu": "학력무관", "reg": "2026-10-08", "end": null, "careerNote": false},
+    {"id": 285689, "kind": "lang", "co": "㈜네오위즈", "title": "[네오위즈] 영어 Linguist (계약직)", "type": "계약직", "loc": "경기 성남시", "edu": "학력무관", "reg": "2026-10-08", "end": null, "careerNote": false},
+    {"id": 285677, "kind": "plan", "co": "㈜디벨로켓", "title": "[넥스코어] 게임 기획자(시스템, 컨텐츠) 모집", "type": "계약직", "loc": "경기, 서울", "edu": "학력무관", "reg": "2026-10-08", "end": "2026-12-08", "careerNote": false},
+    {"id": 285600, "kind": "lang", "co": "게임덱스", "title": "[영어] 게임 현지화 파트 번역/검수 담당 - 한영/영한 번역 가능자 (계약직)", "type": "계약직", "loc": "경기 성남시", "edu": "학력무관", "reg": "2026-10-07", "end": null, "careerNote": false},
+    {"id": 285537, "kind": "ops", "co": "㈜그린맨파워", "title": "[판교] 국내 대형게임사 모니터링 담당 채용", "type": "파견직", "loc": "경기 성남시", "edu": "학력무관", "reg": "2026-10-02", "end": null, "careerNote": false},
   ];
+  /* JOBS:END */
 
   const DAY = 86400000;
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const toDate = md => { const [m, d] = md.split("-").map(Number); return new Date(2026, m - 1, d); };
+  const toDate = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
   const daysLeft = j => j.end ? Math.round((toDate(j.end) - today) / DAY) : null;
-  const fmt = md => md.replace("-", "/");
+  const fmt = s => s.slice(5).replace("-", "/");
 
   let state = { kind: "all", sort: "deadline" };
   try { const s = JSON.parse(localStorage.getItem("gj-view") || "null"); if (s) state = { ...state, ...s }; } catch (e) {}
@@ -171,7 +176,7 @@
     const counts = { all: JOBS.length };
     JOBS.forEach(j => counts[j.kind] = (counts[j.kind] || 0) + 1);
     f.innerHTML = [["all", "전체"], ...Object.entries(KINDS)].map(([k, label]) =>
-      `<button class="chip" id="filter-${k}" data-kind="${k}" aria-pressed="${state.kind === k}">${label}<span class="n">${counts[k]}</span></button>`
+      `<button class="chip" id="filter-${k}" data-kind="${k}" aria-pressed="${state.kind === k}">${label}<span class="n">${counts[k] || 0}</span></button>`
     ).join("");
 
     document.querySelectorAll("[data-sort]").forEach(b => b.setAttribute("aria-pressed", b.dataset.sort === state.sort));
@@ -193,11 +198,14 @@
             <span class="tag${j.type.includes("파견") ? " warn" : ""}">${j.type}</span>
             <span class="tag">${j.loc}</span>
             <span class="tag">${j.edu}</span>
+            ${j.careerNote ? `<span class="tag warn">제목에 경력 조건 있음</span>` : ""}
           </div>
         </div>
         <a class="go" href="https://www.gamejob.co.kr/Recruit/GI_Read/View?GI_No=${j.id}" target="_blank" rel="noopener">공고 보기 ↗</a>
       </li>`).join("");
 
+    document.getElementById("updated").textContent = UPDATED ? `${UPDATED} 갱신` : "";
+    if (!JOBS.length) { document.getElementById("summary").textContent = "최근 14일 동안 올라온 공고가 없습니다."; return; }
     const hot = JOBS.filter(j => { const n = daysLeft(j); return n !== null && n >= 0 && n <= 3; });
     document.getElementById("summary").innerHTML = `공고 <strong>${JOBS.length}건</strong>` +
       (hot.length ? ` · <strong class="hot">3일 안에 마감 ${hot.length}건</strong> (${hot.map(j => j.co).join(", ")})` : "");
